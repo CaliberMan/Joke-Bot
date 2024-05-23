@@ -1,4 +1,4 @@
-# 🤡 Discord Joke Bot
+# Discord Joke Bot
 
 ## ✨ Introduction
 The perfect discord bot for your server. Fill your discord with jokes.
@@ -6,7 +6,7 @@ The perfect discord bot for your server. Fill your discord with jokes.
 ## 📝 Dependencies
 - npm/yarn
 
-### ✅ Install all dependencies
+### Install all dependencies
 ```
 npm install
 ```
