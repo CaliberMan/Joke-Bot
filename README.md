@@ -22,3 +22,7 @@ To test the bot
 ```
 npm test
 ```
+
+## 📈 Progress
+- ✅ Webscrapper
+- Discord bot
