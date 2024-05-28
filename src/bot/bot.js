@@ -1,3 +1,4 @@
+const fileUtils = require("../utils/utils");
 const { Client, GatewayIntentBits } = require('discord.js');
 
 require('dotenv').config();
@@ -26,6 +27,15 @@ client.on('error', (error) => {
     console.error('Client Error:', error);
 });
 
+client.on('interactionCreate', (interaction) => {
+    if (!interaction.isChatInputCommand()) return;
+    if (interaction.commandName !== 'joke') return;
+
+    const joke = fileUtils.giveAJoke();
+    interaction.reply(joke);
+})
+
 client.login(token).catch(error => {
     console.error('Failed to login:', error);
 });
+
