@@ -27,4 +27,4 @@ npm test
 
 ## 🔨 Progress
 - ✅ Webscrapper
-- Discord bot
+- ✖️ Discord bot
