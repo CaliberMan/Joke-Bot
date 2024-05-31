@@ -17,7 +17,7 @@ npm install
 
 To run the bot
 ```
-node src/index.js
+node src/bot/server.js
 ```
 
 To test the bot
@@ -27,4 +27,14 @@ npm test
 
 ## 🔨 Progress
 - ✅ Webscrapper
-- ✖️ Discord bot
+- ✅ Basic Bot
+
+### What can it do
+- ✅ Webscrape a website
+- ✅ Send jokes on discord using /joke
+
+### In development
+- Host the bot on a server
+- Move from a webscrapper to a joke api
+- Read jokes from discord
+- Add a reaction system to classify good and bad jokes
