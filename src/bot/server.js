@@ -1,5 +1,6 @@
 const fileUtils = require("../utils/utils");
 const { Client, GatewayIntentBits } = require('discord.js');
+const { CronJob } = require('cron');
 
 require('dotenv').config();
 const token = process.env.TOKEN;
@@ -34,6 +35,18 @@ client.on('interactionCreate', (interaction) => {
     const joke = fileUtils.giveAJoke();
     interaction.reply(joke);
 })
+
+// define channelName
+const job = CronJob.from({
+    cronTime: '* * * * * *',
+    onTick: function () {
+        client.channels.cache.find(channel => channel.name === channelName);
+        const joke = fileUtils.giveAJoke();
+        channel.send(joke);
+	},
+    start: true,
+	timeZone: 'America/Los_Angeles'
+});
 
 client.login(token).catch(error => {
     console.error('Failed to login:', error);
