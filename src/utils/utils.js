@@ -26,10 +26,9 @@ function writeToJSONFile(JSON_filename, jokes)
 function giveAJoke()
 {
     let jokes = readFromJSONFile('jokes_cp.json');
-    const joke = jokes[0].question + '\n' + jokes[0].answer;
     jokes.splice(0, 1);
     writeToJSONFile('jokes_cp.json', jokes);
-    return joke;
+    return jokes[0];
 }
 
 module.exports = {

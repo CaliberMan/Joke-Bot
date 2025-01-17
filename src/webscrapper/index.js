@@ -1,5 +1,5 @@
-const scrapper = require("./webscrapper/scrapper");
-const fileUtils = require("./utils/utils");
+const scrapper = require("../webscrapper/scrapper");
+const fileUtils = require("../utils/utils");
 
 async function main()
 {

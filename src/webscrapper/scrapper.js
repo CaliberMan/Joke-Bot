@@ -12,7 +12,9 @@ async function scrapeSite()
     const jokes = [];
 
     htmlElement.each((index, element) => {
-        jokes.push($(element).text());
+        let jokeText = $(element).text();
+        jokeText = jokeText.replace(/^\d+\.\s*/, '');
+        jokes.push(jokeText);
     });
 
     jokes.splice(0, 4);

@@ -1,9 +1,9 @@
 const fileUtils = require("../utils/utils");
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const { CronJob } = require('cron');
 
 require('dotenv').config();
-const token = process.env.TOKEN;
+const token = process.env.BOT_TOKEN;
 
 const client = new Client({ 
     intents: [
@@ -15,7 +15,32 @@ const client = new Client({
 });
 
 client.on("ready", () => {
-    console.log(`Logged in as ${client.user.tag}!`)
+    console.log(`Logged in as ${client.user.tag}!`);
+
+    const channelName = 'general';
+
+    // Set up the CronJob to run at 9 AM every day in Paris time
+    const job = new CronJob('25 13 * * *', function() {
+        client.guilds.cache.forEach(guild => {
+            const channel = guild.channels.cache.find(channel => channel.name === channelName);
+            if (channel) {
+
+                const joke = fileUtils.giveAJoke();
+                const embed = new EmbedBuilder()
+                    .setTitle(joke.question)
+                    .setColor('#0xffff00')
+                    .setDescription(joke.answer)
+                    .setTimestamp()
+                    .setFooter({ text: 'Brought to you by JokeBot 🤖', iconURL: 'https://example.com/jokebot_icon.png' })
+
+                channel.send({ embeds: [embed] });
+            } else {
+                console.error(`Channel ${channelName} not found in guild ${guild.name}`);
+            }
+        });
+    }, null, true, 'Europe/Paris');
+
+    job.start();
 });
 
 client.on("messageCreate", msg => {
@@ -33,20 +58,15 @@ client.on('interactionCreate', (interaction) => {
     if (interaction.commandName !== 'joke') return;
 
     const joke = fileUtils.giveAJoke();
-    interaction.reply(joke);
-})
+    const embed = new EmbedBuilder()
+        .setTitle(joke.question)
+        .setColor('#0xffff00')
+        .setDescription(joke.answer)
+        .setTimestamp()
+        .setFooter({ text: 'Brought to you by JokeBot 🤖', iconURL: 'https://example.com/jokebot_icon.png' })
 
-// define channelName
-const job = CronJob.from({
-    cronTime: '* * * * * *',
-    onTick: function () {
-        client.channels.cache.find(channel => channel.name === channelName);
-        const joke = fileUtils.giveAJoke();
-        channel.send(joke);
-	},
-    start: true,
-	timeZone: 'America/Los_Angeles'
-});
+    interaction.reply({ embeds: [embed] });
+})
 
 client.login(token).catch(error => {
     console.error('Failed to login:', error);
